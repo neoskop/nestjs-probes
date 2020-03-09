@@ -1,6 +1,6 @@
 {
   "name": "@neoskop/nestjs-probes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": [
     "NestJS",
     "Kubernetes",
