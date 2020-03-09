@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { HealthIndicatorResult } from "@nestjs/terminus";
-import { ProbesModuleOptions } from "./probes-module-options.interface";
-import { ProbeType } from "./types";
+import { Injectable } from '@nestjs/common';
+import { HealthIndicatorResult } from '@nestjs/terminus';
+import { ProbesModuleOptions } from './probes-module-options.interface';
+import { ProbeType } from './types';
 
 @Injectable()
 export class ProbesService {
@@ -16,12 +16,12 @@ export class ProbesService {
       if (check !== undefined) {
         let newStatus: boolean;
 
-        if (typeof check === "function") {
+        if (typeof check === 'function') {
           const result = await check();
 
-          if (typeof result === "object") {
+          if (typeof result === 'object') {
             newStatus = this.checkTerminusHealthResults([result]);
-          } else if (typeof result === "boolean") {
+          } else if (typeof result === 'boolean') {
             newStatus = result;
           }
         } else {
@@ -39,10 +39,10 @@ export class ProbesService {
   }
 
   private checkTerminusHealthResults(
-    results: HealthIndicatorResult[]
+    results: HealthIndicatorResult[],
   ): boolean {
     return results.every(
-      result => result[Object.keys(result)[0]].status !== "up"
+      result => result[Object.keys(result)[0]].status !== 'up',
     );
   }
 }

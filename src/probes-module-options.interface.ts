@@ -1,5 +1,5 @@
-import { HealthIndicatorFunction } from "@nestjs/terminus";
-import { ProbeCheck, ProbeType } from "./types";
+import { HealthIndicatorFunction } from '@nestjs/terminus';
+import { ProbeCheck, ProbeType } from './types';
 
 export interface ProbesModuleOptions {
   checks: {

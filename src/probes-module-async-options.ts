@@ -1,8 +1,8 @@
-import { ModuleMetadata } from "@nestjs/common/interfaces";
-import { ProbesModuleOptions } from "./probes-module-options.interface";
+import { ModuleMetadata } from '@nestjs/common/interfaces';
+import { ProbesModuleOptions } from './probes-module-options.interface';
 
 export interface ProbesModuleAsyncOptions
-  extends Pick<ModuleMetadata, "imports"> {
+  extends Pick<ModuleMetadata, 'imports'> {
   useFactory?: (
     ...args: any[]
   ) => Promise<ProbesModuleOptions> | ProbesModuleOptions;
