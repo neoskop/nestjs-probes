@@ -5,7 +5,7 @@ import { ProbeType } from './types';
 
 @Injectable()
 export class ProbesService {
-  private statusMap: Map<ProbeType, boolean>;
+  private statusMap: Map<ProbeType, boolean> = new Map();
 
   constructor(private readonly options: ProbesModuleOptions) {}
 
