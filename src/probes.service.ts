@@ -1,16 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HealthIndicatorResult } from '@nestjs/terminus';
 import { ProbesModuleOptions } from './probes-module-options.interface';
+import { PROBES_MODULE_OPTIONS } from './probes.constants';
 import { ProbeType } from './types';
 
 @Injectable()
 export class ProbesService {
-  private statusMap: Map<ProbeType, boolean> = new Map();
+  private statusMap: { [key in ProbeType]?: boolean } = {};
 
-  constructor(private readonly options: ProbesModuleOptions) {}
+  constructor(
+    @Inject(PROBES_MODULE_OPTIONS)
+    private readonly options: ProbesModuleOptions,
+  ) {}
 
   public async checkProbe(probeName: ProbeType): Promise<boolean> {
-    if (!this.statusMap.has(probeName) && this.statusMap[probeName]) {
+    if (this.statusMap[probeName] === undefined || !this.statusMap[probeName]) {
       const check = this.options.checks[probeName];
 
       if (check !== undefined) {
@@ -25,8 +29,8 @@ export class ProbesService {
             newStatus = result;
           }
         } else {
-          const results = await Promise.all(check.map(f => f()));
-          this.checkTerminusHealthResults(results);
+          const results = await Promise.all(check.map(async f => await f()));
+          newStatus = this.checkTerminusHealthResults(results);
         }
 
         this.statusMap[probeName] = newStatus;
@@ -42,7 +46,7 @@ export class ProbesService {
     results: HealthIndicatorResult[],
   ): boolean {
     return results.every(
-      result => result[Object.keys(result)[0]].status !== 'up',
+      result => result[Object.keys(result)[0]].status === 'up',
     );
   }
 }

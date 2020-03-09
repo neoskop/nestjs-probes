@@ -1,4 +1,10 @@
-import { DynamicModule, Global, Inject, Module } from '@nestjs/common';
+import {
+  DynamicModule,
+  Global,
+  Inject,
+  Module,
+  Provider,
+} from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ProbesModuleAsyncOptions } from './probes-module-async-options';
 import { ProbesModuleOptions } from './probes-module-options.interface';
@@ -24,16 +30,25 @@ export class ProbesCoreModule {
     };
   }
 
-  private static async getAsyncServiceProvider(
+  private static getAsyncServiceProvider(
     options: ProbesModuleAsyncOptions,
-  ) {
+  ): Provider<ProbesService> {
     return {
       provide: ProbesService,
-      useFactory: async (o: ProbesModuleOptions) => {
+      useFactory: (o: ProbesModuleOptions) => {
         return new ProbesService(o);
       },
-      imports: options.imports,
-      inject: options.inject || [],
+      inject: [PROBES_MODULE_OPTIONS],
+    };
+  }
+
+  private static getAsyncOptionsProvider(
+    options: ProbesModuleAsyncOptions,
+  ): Provider<ProbesModuleOptions> {
+    return {
+      provide: PROBES_MODULE_OPTIONS,
+      useFactory: options.useFactory,
+      inject: [...options.inject],
     };
   }
 
@@ -45,7 +60,7 @@ export class ProbesCoreModule {
     const serviceProvider = await this.getServiceProvider(options);
     return {
       module: ProbesCoreModule,
-      providers: [serviceProvider, probesModuleOptions],
+      providers: [probesModuleOptions, serviceProvider],
       exports: [serviceProvider],
     };
   }
@@ -53,14 +68,11 @@ export class ProbesCoreModule {
   static async forRootAsync(
     options: ProbesModuleAsyncOptions,
   ): Promise<DynamicModule> {
-    const probesModuleOptions = {
-      provide: PROBES_MODULE_OPTIONS,
-      useValue: options,
-    };
-    const serviceProvider = await this.getAsyncServiceProvider(options);
+    const probesModuleOptions = this.getAsyncOptionsProvider(options);
+    const serviceProvider = this.getAsyncServiceProvider(options);
     return {
       module: ProbesCoreModule,
-      providers: [serviceProvider, probesModuleOptions],
+      providers: [probesModuleOptions, serviceProvider],
       exports: [serviceProvider],
       imports: options.imports,
     };
