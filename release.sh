@@ -10,7 +10,6 @@ function check_command() {
 
 check_command jq
 check_command npm
-check_command yarn
 
 if [[ "$#" != "1" ]] || [[ ! "$1" =~ ^(patch|minor|major)$ ]]; then
   echo "Usage: $0 patch|minor|major"
@@ -26,8 +25,8 @@ git pull --rebase
 npm version --no-git-tag-version $1
 version=$(cat package.json | jq -r .version)
 
-yarn
-yarn build
+npm i
+npm run build
 npm publish
 
 git add .
