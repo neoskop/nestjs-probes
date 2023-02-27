@@ -20,9 +20,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "peerDependencies": {
-    "@nestjs/common": "9.1.4",
-    "@nestjs/core": "9.1.4",
-    "@nestjs/terminus": "9.1.2",
+    "@nestjs/common": "9.3.9",
+    "@nestjs/core": "9.3.9",
+    "@nestjs/terminus": "9.3.9",
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
