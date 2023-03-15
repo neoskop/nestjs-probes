@@ -20,10 +20,10 @@
     "build": "tsc -p tsconfig.json"
   },
   "peerDependencies": {
-    "@nestjs/common": "9.3.9",
-    "@nestjs/core": "9.3.9",
-    "@nestjs/terminus": "9.2.1",
-    "reflect-metadata": "0.1.13"
+    "@nestjs/common": "^9.3.10",
+    "@nestjs/core": "^9.3.10",
+    "@nestjs/terminus": "^9.2.1",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@godaddy/terminus": "4.11.2",
