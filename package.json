@@ -20,17 +20,17 @@
     "build": "tsc -p tsconfig.json"
   },
   "peerDependencies": {
-    "@nestjs/common": "^9.3.10",
-    "@nestjs/core": "^9.3.10",
-    "@nestjs/terminus": "^9.2.1",
+    "@nestjs/common": "^9.3.10 || ^10.0.0",
+    "@nestjs/core": "^9.3.10 || ^10.0.0",
+    "@nestjs/terminus": "^9.2.1 || ^10.0.0",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@godaddy/terminus": "4.11.2",
-    "@nestjs/common": "9.3.10",
-    "@nestjs/core": "9.3.10",
-    "@nestjs/terminus": "9.2.1",
-    "@nestjs/testing": "9.3.10",
+    "@nestjs/common": "10.2.1",
+    "@nestjs/core": "10.2.1",
+    "@nestjs/terminus": "10.0.1",
+    "@nestjs/testing": "10.2.1",
     "@types/jest": "29.4.3",
     "@types/node": "18.15.3",
     "express": "4.18.2",
