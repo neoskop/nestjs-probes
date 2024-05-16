@@ -14,7 +14,7 @@ export class ProbesService {
   ) {}
 
   public async checkProbe(probeName: ProbeType): Promise<boolean> {
-    if (this.statusMap[probeName] === undefined || !this.statusMap[probeName]) {
+    if (this.statusMap[probeName] === undefined) {
       const check = this.options.checks[probeName];
 
       if (check !== undefined) {
@@ -29,7 +29,7 @@ export class ProbesService {
             newStatus = result;
           }
         } else {
-          const results = await Promise.all(check.map(async f => await f()));
+          const results = await Promise.all(check.map(async (f) => await f()));
           newStatus = this.checkTerminusHealthResults(results);
         }
 
@@ -46,7 +46,7 @@ export class ProbesService {
     results: HealthIndicatorResult[],
   ): boolean {
     return results.every(
-      result => result[Object.keys(result)[0]].status === 'up',
+      (result) => result[Object.keys(result)[0]].status === 'up',
     );
   }
 }
