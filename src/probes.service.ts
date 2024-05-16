@@ -14,29 +14,27 @@ export class ProbesService {
   ) {}
 
   public async checkProbe(probeName: ProbeType): Promise<boolean> {
-    if (this.statusMap[probeName] === undefined) {
-      const check = this.options.checks[probeName];
+    const check = this.options.checks[probeName];
 
-      if (check !== undefined) {
-        let newStatus: boolean;
+    if (check !== undefined) {
+      let newStatus: boolean;
 
-        if (typeof check === 'function') {
-          const result = await check();
+      if (typeof check === 'function') {
+        const result = await check();
 
-          if (typeof result === 'object') {
-            newStatus = this.checkTerminusHealthResults([result]);
-          } else if (typeof result === 'boolean') {
-            newStatus = result;
-          }
-        } else {
-          const results = await Promise.all(check.map(async (f) => await f()));
-          newStatus = this.checkTerminusHealthResults(results);
+        if (typeof result === 'object') {
+          newStatus = this.checkTerminusHealthResults([result]);
+        } else if (typeof result === 'boolean') {
+          newStatus = result;
         }
-
-        this.statusMap[probeName] = newStatus;
       } else {
-        this.statusMap[probeName] = true;
+        const results = await Promise.all(check.map(async (f) => await f()));
+        newStatus = this.checkTerminusHealthResults(results);
       }
+
+      this.statusMap[probeName] = newStatus;
+    } else {
+      this.statusMap[probeName] = true;
     }
 
     return this.statusMap[probeName];
