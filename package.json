@@ -27,10 +27,10 @@
   },
   "devDependencies": {
     "@godaddy/terminus": "4.12.1",
-    "@nestjs/common": "11.0.7",
-    "@nestjs/core": "11.0.7",
+    "@nestjs/common": "11.0.9",
+    "@nestjs/core": "11.0.9",
     "@nestjs/terminus": "11.0.0",
-    "@nestjs/testing": "11.0.7",
+    "@nestjs/testing": "11.0.9",
     "@types/jest": "29.5.14",
     "@types/node": "22.13.1",
     "express": "4.21.2",
